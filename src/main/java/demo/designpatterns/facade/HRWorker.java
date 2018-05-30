@@ -1,0 +1,21 @@
+package demo.designpatterns.facade;
+
+/**
+ * 
+* @ClassName: HRWorker  
+* @Description: 具体实现  
+* @author gaox  
+* @date 2018年5月30日 下午6:21:26
+ */
+public class HRWorker extends Worker{
+
+	public HRWorker(String name) {
+		super(name);
+	}
+
+	@Override
+	public void work() {
+		System.out.println(name + "看简历-打电话-接电话");
+	}
+
+}
