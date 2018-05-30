@@ -3,7 +3,7 @@ package demo.designpatterns.command;
 /**
  * 
 * @ClassName: AudioPlayer  
-* @Description: 命令接受类  
+* @Description: 命令接受类 
 * @author gaox  
 * @date 2018年5月23日 下午5:26:19
  */
