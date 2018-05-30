@@ -1,0 +1,1 @@
+模板方法模式 http://www.cnblogs.com/java-my-life/archive/2012/05/14/2495235.html

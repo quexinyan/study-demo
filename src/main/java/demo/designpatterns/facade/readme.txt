@@ -1,0 +1,1 @@
+外观模式 http://blog.csdn.net/jason0539/article/details/22775311
