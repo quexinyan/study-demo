@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 /**
  * 
 * @ClassName: UrlToMap  
-* @Description: url参数处理  
+* @Description: url参数处理 
 * @author gaox  
 * @date 2018年5月16日 下午3:18:04
  */
