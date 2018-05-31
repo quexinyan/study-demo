@@ -42,14 +42,6 @@
 		</dependency>
 		<!-- Excel end -->
 
-		<!-- 测试本地私服 begin -->
-		<dependency>
-			<groupId>com.xinzhang</groupId>
-			<artifactId>ancun-51cunzheng</artifactId>
-			<version>1.0.2</version>
-		</dependency>
-		<!-- 测试本地私服 end -->
-
 		<!-- StringUtils依赖包 -->
 		<dependency>
 			<groupId>commons-lang</groupId>
