@@ -30,6 +30,10 @@ public class GenericityFunction {
 		return list.get(index);
 	}
 	
+	public List<?> out3(List<?> list){
+		return list;
+	}
+	
 	@Test
 	public void test0() {
 		out0("ahhh");
@@ -50,5 +54,18 @@ public class GenericityFunction {
 		list.add("ahhh");
 		String ret = out2(list, 0);
 		System.out.println(ret);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void test3() {
+		List<String> listStr = new ArrayList<String>();
+		listStr.add("ahhh");
+		List<Integer> listInt = new ArrayList<Integer>();
+		listInt.add(123456);
+		List<String> retStr = (List<String>) out3(listStr);
+		System.out.println(retStr.get(0));
+		List<Integer> retInt = (List<Integer>) out3(listInt);
+		System.out.println(retInt.get(0));
 	}
 }
