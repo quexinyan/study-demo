@@ -24,6 +24,7 @@
         <commons-io.version>2.5</commons-io.version>
         <commons-codec.version>1.10</commons-codec.version>
         <aspectjweaver.version>1.8.10</aspectjweaver.version>
+        <lucene.version>3.5.0</lucene.version>
     </properties>
 	
 	<dependencies>
@@ -156,6 +157,14 @@
         </dependency>
         
 		<!-- SSM配置 end -->
+		
+		<!-- lucene begin -->
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-core</artifactId>
+		    <version>${lucene.version}</version>
+		</dependency>
+		<!-- lucene end -->
 
 	</dependencies>
 	<build>
