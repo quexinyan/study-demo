@@ -26,6 +26,12 @@ public class InitializationSingleton {
 	private static class SingletonHolder{
 		// 静态初始化器，由JVM来保证线程安全
 		private static InitializationSingleton instance = new InitializationSingleton();
+		
+		private static String str;
+		static {
+			System.out.println("类级内部类单例测试......");
+			str = "单例";
+		}
 	}
 	
 	/**
@@ -35,5 +41,14 @@ public class InitializationSingleton {
 	 */
 	public static InitializationSingleton getInstance() {
 		return SingletonHolder.instance;
+	}
+	
+	public static void main(String[] args) {
+		InitializationSingleton instance1 = getInstance();
+		InitializationSingleton instance2 = getInstance();
+		System.out.println(instance1);
+		System.out.println(instance2);
+		System.out.println(SingletonHolder.str);
+		System.out.println(SingletonHolder.str);
 	}
 }

@@ -164,12 +164,30 @@
 		    <artifactId>lucene-core</artifactId>
 		    <version>${lucene.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-analyzers</artifactId>
+		    <version>${lucene.version}</version>
+		</dependency>
+		<!-- <dependency>
+		    <groupId>ikanalyzer</groupId>
+			<artifactId>IKAnalyzer2012</artifactId>
+			<version>1.0</version>
+		</dependency> -->
+		<dependency>
+		    <groupId>ikanalyzer</groupId>
+		    <artifactId>IKAnalyzer2012</artifactId>
+		    <version>1.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/IKAnalyzer2012.jar</systemPath>
+		</dependency>
 		<!-- lucene end -->
 
 	</dependencies>
 	<build>
 		<finalName>study-all</finalName>
 		
+		<!-- 若maven项目中，src/main/java下放置了文件，需要此配置，将文件打包进去 -->
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -190,5 +208,31 @@
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		
+		<!-- maven项目引用本地jar -->
+		<plugins>
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.5.2</version>
+				<executions>
+					<execution>
+						<id>install-ikanalyzer</id>
+						<phase>clean</phase>
+						<configuration>
+							<file>${project.basedir}/lib/IKAnalyzer2012.jar</file>
+							<groupId>ikanalyzer</groupId>
+							<artifactId>IKAnalyzer2012</artifactId>
+							<version>1.0</version>
+							<packaging>jar</packaging>
+							<generatePom>true</generatePom>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin> -->
+		</plugins>
 	</build>
 </project>

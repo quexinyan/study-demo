@@ -58,6 +58,7 @@ public class SearchIndex {
 			for(Fieldable fieldable : fields) {
 				System.out.println(fieldable.name()+"  ->  "+fieldable.stringValue());
 			}
+			//System.out.println(document.get("author"));
 		}
 		
 		indexSearcher.close();
