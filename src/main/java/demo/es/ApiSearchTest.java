@@ -100,4 +100,120 @@ public class ApiSearchTest {
                 "我的保时捷马力不错");
         util.query(qb).print();
     }
+
+    /**
+    * 希望两个字段进行匹配，其中一个字段有这个文档就满足的话
+    * @author      gaox
+    * @date        2018/6/29 9:28
+    */
+    @Test
+    public void MultiMatchQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        QueryBuilder qb=QueryBuilders.multiMatchQuery("kimchy","message","user");
+        util.query(qb).print();
+    }
+
+    /**
+    * 查询用于匹配数值型、日期型或字符串型字段在某一范围内的文档
+    * @author      gaox
+    * @date        2018/6/29 9:49
+    */
+    @Test
+    public void RangeQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.rangeQuery("postDate").from("2018-06-28").to("2018-12-31").format("yyyy-MM-dd");
+        util.query(qb).print();
+    }
+
+    /**
+    * 返回原始字段中至少包含一个非空值的文档
+    * @author      gaox
+    * @date        2018/6/29 9:51
+    */
+    @Test
+    public void ExistsQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.existsQuery("postDate");
+        util.query(qb).print();
+    }
+
+    /**
+    * 查询以什么开头的文档
+    * @author      gaox
+    * @date        2018/6/29 9:53
+    */
+    @Test
+    public void prefixQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.prefixQuery("name","kim");
+        util.query(qb).print();
+    }
+
+    /**
+    * 通配符查询
+    * @author      gaox
+    * @date        2018/6/29 9:54
+    */
+    @Test
+    public void wildcard(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.wildcardQuery("name","*kim*");
+        util.query(qb).print();
+    }
+
+    /**
+    * 正则表达式查询
+    * @author      gaox
+    * @date        2018/6/29 9:57
+    */
+    @Test
+    public void regexpQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.regexpQuery("name","ki.*");
+        util.query(qb).print();
+    }
+
+    /**
+    * 模糊查询
+    * @author      gaox
+    * @date        2018/6/29 10:09
+    */
+    @Test
+    public void fuzzyQuery(){
+        QueryUtil util=new QueryUtil("twitter2",5);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.fuzzyQuery("name","mch");
+        util.query(qb).print();
+    }
+
+    /**
+    * type查询
+    * @author      gaox
+    * @date        2018/6/29 10:10
+    */
+    @Test
+    public void typeQuery(){
+        QueryUtil util=new QueryUtil("twitter2",2);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.typeQuery("tweet");
+        util.query(qb).print();
+    }
+
+    /**
+    * ids查询
+    * @author      gaox
+    * @date        2018/6/29 10:11
+    */
+    @Test
+    public void idsQuery(){
+        QueryUtil util=new QueryUtil("twitter2",2);
+        //构造查询对象
+        QueryBuilder qb=QueryBuilders.idsQuery().addIds("1","3");
+        util.query(qb).print();
+    }
 }
