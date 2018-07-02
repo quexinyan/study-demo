@@ -6,6 +6,10 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.bucket.filter.Filter;
+import org.elasticsearch.search.aggregations.bucket.filter.Filters;
+import org.elasticsearch.search.aggregations.bucket.missing.Missing;
+import org.elasticsearch.search.aggregations.bucket.range.Range;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.percentiles.Percentile;
 import org.elasticsearch.search.aggregations.metrics.percentiles.Percentiles;
@@ -351,6 +355,66 @@ public class ApiSearchTest {
         }
     }
 
+    /**
+    * 过滤器聚合
+    * @author      gaox
+    * @date        2018/7/2 18:16
+    */
+    @Test
+    public void aggregationFilterSearch(){
+        Filter filter = aggregationUtil.filter("age", "26");
+        System.out.println(filter.getDocCount());
+    }
+
+    /**
+     * 多过滤器聚合
+     * @author      gaox
+     * @date        2018/7/2 18:16
+     */
+    @Test
+    public void aggregationFiltersSearch(){
+        Filters filters = aggregationUtil.filters("age", "26", "user", "gaox");
+        for(Filters.Bucket entry:filters.getBuckets()){
+            System.out.println(entry.getKey()+":"+entry.getDocCount());
+        }
+    }
+
+    /**
+     * 区间聚合
+     * @author      gaox
+     * @date        2018/7/2 18:16
+     */
+    @Test
+    public void aggregationRangeSearch(){
+        Range range = aggregationUtil.range("salary", 4600, 12000);
+        for(Range.Bucket entry:range.getBuckets()){
+            System.out.println(entry.getKey()+":"+entry.getDocCount());
+        }
+    }
+
+    /**
+    * 日期区间聚合
+    * @author      gaox
+    * @date        2018/7/2 18:51
+    */
+    @Test
+    public void aggregationDateRangeSearch(){
+        Range dateRange = aggregationUtil.dateRange("postdate", "now-12M/M", "now-12M/M");
+        for(Range.Bucket entry:dateRange.getBuckets()){
+            System.out.println(entry.getKey()+":"+entry.getDocCount());
+        }
+    }
+
+    /**
+    * Missing聚合
+    * @author      gaox
+    * @date        2018/7/2 18:56
+    */
+    @Test
+    public void aggregationMissingSearch(){
+        Missing missing = aggregationUtil.missing("salary1");
+        System.out.println(missing.getDocCount());
+    }
 
     /*********************************聚合查询 end***********************************/
 }
