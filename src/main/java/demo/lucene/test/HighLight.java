@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.IOException;
@@ -15,13 +16,15 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.SimpleSpanFragmenter;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+*/
 /**
  * 
 * @ClassName: HighLight  
 * @Description: 高亮处理
 * @author gaox  
 * @date 2018年6月16日 下午5:11:46
- */
+ *//*
+
 public class HighLight {
 
 	public static void main(String[] args) throws IOException, InvalidTokenOffsetsException {
@@ -59,3 +62,4 @@ public class HighLight {
 		System.out.println(bestFragment);
 	}
 }
+*/

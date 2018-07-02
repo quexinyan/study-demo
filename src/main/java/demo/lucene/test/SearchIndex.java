@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.File;
@@ -16,13 +17,15 @@ import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+*/
 /**
  * 
 * @ClassName: SearchIndex  
 * @Description: 索引库查询  
 * @author gaox  
 * @date 2018年6月13日 下午5:18:34
- */
+ *//*
+
 public class SearchIndex {
 
 	public static void main(String[] args) throws IOException {
@@ -64,3 +67,4 @@ public class SearchIndex {
 		indexSearcher.close();
 	}
 }
+*/

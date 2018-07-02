@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.File;
@@ -12,13 +13,15 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
+*/
 /**
  * 
 * @ClassName: DeleteIndex  
 * @Description: 索引库删除数据  
 * @author gaox  
 * @date 2018年6月13日 下午5:41:50
- */
+ *//*
+
 public class DeleteIndex {
 
 	public static void main(String[] args) throws IOException {
@@ -39,3 +42,4 @@ public class DeleteIndex {
 		indexWriter.close();
 	}
 }
+*/

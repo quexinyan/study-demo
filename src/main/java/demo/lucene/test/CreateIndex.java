@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.File;
@@ -15,13 +16,15 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 
+*/
 /**
  * 
 * @ClassName: CreateIndex  
 * @Description: 创建索引库  
 * @author gaox  
 * @date 2018年6月13日 下午2:02:47
- */
+ *//*
+
 public class CreateIndex {
 
 	public static void main(String[] args) throws IOException {
@@ -57,3 +60,4 @@ public class CreateIndex {
 		
 	}
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.IOException;
@@ -8,13 +9,15 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.wltea.analyzer.lucene.IKAnalyzer;
 
+*/
 /**
  * 
 * @ClassName: Analyer  
 * @Description: 分析器 
 * @author gaox  
 * @date 2018年6月14日 上午10:13:34
- */
+ *//*
+
 public class Analyer {
 
 	public static void main(String[] args) throws IOException {
@@ -29,3 +32,4 @@ public class Analyer {
 		analyzer.close();
 	}
 }
+*/

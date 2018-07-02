@@ -6,6 +6,11 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.metrics.percentiles.Percentile;
+import org.elasticsearch.search.aggregations.metrics.percentiles.Percentiles;
+import org.elasticsearch.search.aggregations.metrics.stats.Stats;
+import org.elasticsearch.search.aggregations.metrics.stats.extended.ExtendedStats;
 import org.junit.Test;
 
 import java.util.Map;
@@ -216,4 +221,136 @@ public class ApiSearchTest {
         QueryBuilder qb=QueryBuilders.idsQuery().addIds("1","3");
         util.query(qb).print();
     }
+
+    /*********************************聚合查询 begin***********************************/
+
+    private AggregationSearchUtil aggregationUtil = new AggregationSearchUtil("aggregations");
+    /**
+    * 最大值统计
+    * @author      gaox
+    * @date        2018/7/2 14:09
+    */
+    @Test
+    public void aggregationMaxSearch(){
+
+        double max = aggregationUtil.max("age");
+        System.out.println("max age="+max);
+    }
+
+    /**
+    * 最小值统计
+    * @author      gaox
+    * @date        2018/7/2 14:58
+    */
+    @Test
+    public void aggregationMinSearch(){
+        double min = aggregationUtil.min("age");
+        System.out.println("min age="+min);
+    }
+
+    /**
+    * 平均值统计
+    * @author      gaox
+    * @date        2018/7/2 15:18
+    */
+    @Test
+    public void aggregationAvgSearch(){
+        double salary = aggregationUtil.avg("salary");
+        System.out.println("avg salary="+salary);
+    }
+
+    /**
+    * 合计统计
+    * @author      gaox
+    * @date        2018/7/2 15:19
+    */
+    @Test
+    public void aggregationSumSearch(){
+        double salary = aggregationUtil.sum("salary");
+        System.out.println("sum salary="+salary);
+    }
+
+    /**
+     * 基本统计
+     * @author      gaox
+     * @date        2018/7/2 15:19
+     */
+    @Test
+    public void aggregationStatsSearch(){
+        Stats stats = aggregationUtil.stats("salary");
+        System.out.println("min="+stats.getMin());
+        System.out.println("max="+stats.getMax());
+        System.out.println("avg="+stats.getAvg());
+        System.out.println("sum="+stats.getSum());
+        System.out.println("count="+stats.getCount());
+    }
+
+    /**
+     * 高级统计
+     * @author      gaox
+     * @date        2018/7/2 15:19
+     */
+    @Test
+    public void aggregationExtendedStatsSearch(){
+        ExtendedStats stats = aggregationUtil.extendedStats("salary");
+        System.out.println("min="+stats.getMin());
+        System.out.println("max="+stats.getMax());
+        System.out.println("avg="+stats.getAvg());
+        System.out.println("sum="+stats.getSum());
+        System.out.println("count="+stats.getCount());
+        System.out.println("stdDeviation="+stats.getStdDeviation());
+        System.out.println("sumOfSquares="+stats.getSumOfSquares());
+        System.out.println("variance="+stats.getVariance());
+    }
+
+    /**
+    * 基数统计
+    * @author      gaox
+    * @date        2018/7/2 15:27
+    */
+    @Test
+    public void aggregationCardinalitySearch(){
+        double cardinality = aggregationUtil.cardinality("salary");
+        System.out.println("cardinality="+cardinality);
+    }
+
+    /**
+     * 百分位统计
+     * @author      gaox
+     * @date        2018/7/2 15:27
+     */
+    @Test
+    public void aggregationPercentilesSearch(){
+        Percentiles percent = aggregationUtil.percentiles("salary");
+        for(Percentile p:percent) {
+            System.out.printf("percent [%f],value [%f]\n",p.getPercent(),p.getValue());
+        }
+    }
+
+    /**
+     * 文档数量统计
+     * @author      gaox
+     * @date        2018/7/2 15:27
+     */
+    @Test
+    public void aggregationValueCountSearch(){
+        double count = aggregationUtil.valueCount("salary");
+        System.out.println("count="+count);
+    }
+
+    /**
+     * 分组聚合
+     * @author      gaox
+     * @date        2018/7/2 15:27
+     */
+    @Test
+    public void aggregationTermsSearch(){
+        Terms terms = aggregationUtil.terms("salary");
+        for(Terms.Bucket entry:terms.getBuckets()){
+            System.out.println(entry.getKey()+":"+entry.getDocCount());
+        }
+    }
+
+
+    /*********************************聚合查询 end***********************************/
 }

@@ -58,20 +58,24 @@ public class BatchHandlesTest {
         TransportClient client= ESUtils.getClient();
         BulkRequestBuilder bulkRequest = client.prepareBulk();
 
-        bulkRequest.add(client.prepareIndex("twitter2", "tweet", "1")
+        bulkRequest.add(client.prepareIndex("aggregations", "aggregation", "3")
                 .setSource(jsonBuilder()
                         .startObject()
                         .field("user", "kimchy")
                         .field("postDate", new Date())
+                        .field("age", 19)
+                        .field("salary", 4500.00)
                         .field("message", "我的宝马多少马力")
                         .endObject()
                 )
         );
-        bulkRequest.add(client.prepareIndex("twitter2", "tweet", "2")
+        bulkRequest.add(client.prepareIndex("aggregations", "aggregation")
                 .setSource(jsonBuilder()
                         .startObject()
                         .field("user", "kimchy")
                         .field("postDate", new Date())
+                        .field("age", 26)
+                        .field("salary", 11000.60)
                         .field("message", "我的保时捷马力不错")
                         .endObject()
                 )

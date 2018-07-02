@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 
 import java.io.File;
@@ -33,6 +34,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.junit.Test;
 
+*/
 /**
  * 
 * @ClassName: SearchAPIHighLever  
@@ -40,7 +42,8 @@ import org.junit.Test;
 * 	注意：尽可能的保证IndexWriter是单例的(用类级内部类实现代理)
 * @author gaox  
 * @date 2018年6月15日 上午10:50:42
- */
+ *//*
+
 public class SearchAPIHighLever {
 
 	private static final int[] ids = {1, 2, 3, 4, 5};
@@ -54,12 +57,14 @@ public class SearchAPIHighLever {
 			"it is good at bigdata store and analyzer"};
 	private static final double[] prices={10,15,20,8,16};
 	
-	/**
+	*/
+/**
 	 * 
 	 * @throws IOException 
 	 * @Title: multipleSearch   
 	 * @Description: 多条件查询   
-	 */
+	 *//*
+
 	@Test
 	public void BooleanQuerySearch() throws IOException {
 		
@@ -73,11 +78,13 @@ public class SearchAPIHighLever {
 		search(booleanQuery);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: phraseQuerySearch   
 	 * @Description: 短语查询   
-	 */
+	 *//*
+
 	@Test
 	public void phraseQuerySearch() throws IOException {
 		
@@ -91,11 +98,13 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: numericRangeQuerySearch   
 	 * @Description: 范围查询   
-	 */
+	 *//*
+
 	@Test
 	public void numericRangeQuerySearch() throws IOException {
 		
@@ -103,11 +112,13 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: wildcardQuerySearch   
 	 * @Description: 通配符查询  
-	 */
+	 *//*
+
 	@Test
 	public void wildcardQuerySearch() throws IOException {
 		
@@ -115,11 +126,13 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: fuzzyQuerySearch   
 	 * @Description: 模糊查询   
-	 */
+	 *//*
+
 	@Test
 	public void fuzzyQuerySearch() throws IOException {
 		
@@ -127,11 +140,13 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: prefixQuerySearch   
 	 * @Description: PrefixQuery 前缀查询   
-	 */
+	 *//*
+
 	@Test
 	public void prefixQuerySearch() throws IOException {
 		
@@ -139,12 +154,14 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @throws IOException 
 	 * @Title: TermSearch   
 	 * @Description: termQuery   
-	 */
+	 *//*
+
 	@Test
 	public void TermQuerySearch() throws IOException {
 		
@@ -152,12 +169,14 @@ public class SearchAPIHighLever {
 		search(query);
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @Title: search   
 	 * @Description: 查询公用方法  
 	 * @param: @param query 查询条件
-	 */
+	 *//*
+
 	public void search(Query query) throws IOException {
 		
 		// 1.指定索引库目录
@@ -186,11 +205,13 @@ public class SearchAPIHighLever {
 		indexSearcher.close();
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	* @ClassName: CreateIndexWriter  
 	* @Description: 类级内部类单例创建indexWriter  
-	 */
+	 *//*
+
 	public static class CreateIndexWriter{
 		
 		private static IndexWriter indexWriter;
@@ -211,12 +232,14 @@ public class SearchAPIHighLever {
 		}
 	}
 	
-	/**
+	*/
+/**
 	 * 
 	 * @throws IOException 
 	 * @Title: create   
 	 * @Description: 创建索引库   
-	 */
+	 *//*
+
 	@Test
 	public void create() throws IOException {
 		
@@ -248,3 +271,4 @@ public class SearchAPIHighLever {
 		indexWriter.close();
 	}
 }
+*/

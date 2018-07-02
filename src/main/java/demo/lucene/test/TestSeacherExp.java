@@ -1,3 +1,4 @@
+/*
 package demo.lucene.test;
 import java.io.File;
 import java.io.IOException;
@@ -149,3 +150,4 @@ public class TestSeacherExp {
 		indexWriter.close();
 	}
 }
+*/
