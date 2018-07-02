@@ -16,7 +16,7 @@
         <mybatis.spring.version>1.3.1</mybatis.spring.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
         <jstl.version>1.2</jstl.version>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.7</log4j.version>
         <fastjson.version>1.2.35</fastjson.version>
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>1.9.13</jackson.version>
@@ -41,6 +41,19 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+
+        <!--log4j begin-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!--log4j end-->
 
 		<!-- Excel begin -->
 		<dependency>
@@ -160,7 +173,7 @@
 		<!-- SSM配置 end -->
 		
 		<!-- lucene begin -->
-		<dependency>
+		<!--<dependency>
 		    <groupId>org.apache.lucene</groupId>
 		    <artifactId>lucene-core</artifactId>
 		    <version>${lucene.version}</version>
@@ -182,16 +195,11 @@
 		</dependency>
 		<dependency>
 		    <groupId>ikanalyzer</groupId>
-			<artifactId>IKAnalyzer2012</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-		    <groupId>ikanalyzer</groupId>
 		    <artifactId>IKAnalyzer2012</artifactId>
 		    <version>1.0</version>
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/IKAnalyzer2012.jar</systemPath>
-		</dependency>
+		</dependency>-->
 		<!-- lucene end -->
 		
 		<!-- elasticsearch -->
