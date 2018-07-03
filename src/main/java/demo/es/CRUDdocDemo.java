@@ -37,7 +37,7 @@ public class CRUDdocDemo {
                 "\"url\":\"csdn.net/79239072\"" +
                 "}";
         System.out.println(json);
-        IndexResponse response =client.prepareIndex("index1", "blog","1")
+        IndexResponse response =client.prepareIndex("index1", "blog","10")
                 .setSource(json, XContentType.JSON)
                 .get();
         System.out.println(response.status());
@@ -47,11 +47,11 @@ public class CRUDdocDemo {
                     .field("id","2")
                     .field("title","Java设计模式之单例模式")
                     .field("content","枚举单例模式可以防反射攻击。")
-                    .field("postdate","2018-02-03 19:27:00")
+                    .field("postdate","2018-02-03")
                     .field("url","csdn.net/79247746")
                     .endObject();
         System.out.println(doc1.toString());
-        response = client.prepareIndex("index1", "blog", "2")
+        response = client.prepareIndex("index1", "blog", "11")
                 .setSource(doc1)
                 .get();
         System.out.println(response.status());

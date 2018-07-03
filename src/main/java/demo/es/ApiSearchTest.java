@@ -1,7 +1,9 @@
 package demo.es;
 
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -25,6 +27,132 @@ import java.util.Map;
  * @Description     JAVA Api 查询操作
 */
 public class ApiSearchTest {
+
+    /**
+    * 分页查询-from-size
+     * from定义了目标数据的偏移值，size定义当前返回的数目。
+     * 默认from为0，size为10，即所有的查询默认仅仅返回前10条数据。
+     * 这种查询方式的缺点是越往后的分页，执行效率越低。随着from的增加，消耗时间也会增加。
+     * 而且数据量越大，效果越明显！也就是说，分页的偏移值越大，执行分页查询时间就会越长！
+    * @author      gaox
+    * @date        2018/7/3 11:46
+    */
+    @Test
+    public void page_from_size(){
+        TransportClient client = ESUtils.getClient();
+        SearchResponse response = client.prepareSearch("aggregations")
+                .setTypes("aggregation").setFrom(1)
+                .setSize(2).setQuery(QueryBuilders.matchAllQuery())
+                .execute().actionGet();
+        SearchHits hits=response.getHits();
+        for(SearchHit hit:hits){
+            System.out.println("source:"+hit.getSourceAsString());
+            System.out.println("--------------------");
+        }
+    }
+
+    /**
+     * 分页查询-scroll
+     *
+     * scroll:
+     * Scroll API像传统数据库里的cursors（游标），可以允许我们检索大量数据（甚至全部数据），它允许我们做一个初始阶段搜索并且持续批量从Elasticsearch里拉取结果直到没有结果剩下。
+     * 相对于from-size的分页来说，使用scroll可以模拟一个传统数据的游标，记录当前读取的文档信息位置。这个分页的用法，不是为了实时查询数据，而是为了一次性查询大量的数据（甚至是全部的数据）。
+     * 因为这个scroll相当于维护了一份当前索引段的快照信息，这个快照信息是你执行这个scroll查询时的快照。在这个查询后的任何新索引进来的数据，都不会在这个快照中查询到。
+     * 但是它相对于from-size，不是查询所有数据然后剔除不要的部分，而是记录一个读取的位置，保证下一次快速继续读取
+     *
+     * SearchType详解:
+     * 1、query and fetch
+     向索引的所有分片（shard）都发出查询请求，各分片返回的时候把元素文档（document）和计算后的排名信息一起返回。这种搜索方式是最快的。因为相比下面的几种搜索方式，这种查询方法只需要去shard查询一次。但是各个shard返回的结果的数量之和可能是用户要求的size的n倍。
+
+     2、query then fetch（默认的搜索方式）
+     如果你搜索时，没有指定搜索方式，就是使用的这种搜索方式。这种搜索方式，大概分两个步骤，第一步，先向所有的shard发出请求，各分片只返回排序和排名相关的信息（注意，不包括文档document)，然后按照各分片返回的分数进行重新排序和排名，取前size个文档。然后进行第二步，去相关的shard取document。这种方式返回的document可能是用户要求的size的n倍
+
+     3、DFS query and fetch
+     这种方式比第一种方式多了一个初始化散发(initial scatter)步骤，有这一步，据说可以更精确控制搜索打分和排名。这种方式返回的document与用户要求的size是相等的。
+
+     4、DFS query then fetch
+     比第2种方式多了一个初始化散发(initial scatter)步骤。这种方式返回的document与用户要求的size是相等的。
+
+     总结一下，从性能考虑QUERY_AND_FETCH是最快的，DFS_QUERY_THEN_FETCH是最慢的。从搜索的准确度来说，DFS要比非DFS的准确度更高。
+     * @author      gaox
+     * @date        2018/7/3 14:10
+     */
+    @Test
+    public void page_scrol(){
+        TransportClient client = ESUtils.getClient();
+        SearchResponse searchResponse = client.prepareSearch("aggregations")
+                .setTypes("aggregation")
+                .setScroll(TimeValue.timeValueMinutes(1)) // 游标维持时间
+                .setSearchType(SearchType.QUERY_THEN_FETCH)
+                .setSize(1)
+                .execute()
+                .actionGet();
+
+        int i = 1;
+        String scrollId = searchResponse.getScrollId();
+        System.out.println("----------第"+i+"次查询-------------");
+        System.out.println("searchByScroll scrollID: "+scrollId);
+        i++;
+        for (SearchHit hit : searchResponse.getHits().getHits()){
+            String source = hit.getSourceAsString();
+            System.out.println("searchByScroll source: "+source);
+        }
+
+
+        while (true){
+            System.out.println("----------第"+i+"次查询-------------");
+            System.out.println("searchByScroll scrollID: "+scrollId);
+            i++;
+            // 使用上次的scrollId继续访问,这个 ID 可以传递给 scroll API 来检索下一个批次的结果.
+            searchResponse = client.prepareSearchScroll(scrollId).setScroll(new TimeValue(80000)).execute().actionGet();
+            // 每次返回下一个批次结果 直到没有结果返回时停止 即hits数组空时
+            if(searchResponse.getHits().getHits().length == 0){
+                break;
+            }
+            // 这一批查询结果
+            for (SearchHit hit : searchResponse.getHits().getHits()){
+                String source = hit.getSourceAsString();
+                System.out.println("searchByScroll source: "+source);
+            }
+            // 只有最近的滚动ID才能被使用
+            scrollId = searchResponse.getScrollId();
+        }
+    }
+
+    /**
+    * 分页查询-scroll(代码改进)
+    * @author      gaox
+    * @date        2018/7/3 16:08
+    */
+    @Test
+    public void page_scro2(){
+        TransportClient client = ESUtils.getClient();
+        SearchResponse searchResponse = client.prepareSearch("aggregations")
+                .setTypes("aggregation")
+                .setScroll(TimeValue.timeValueMinutes(1)) // 游标维持时间
+                .setSearchType(SearchType.QUERY_THEN_FETCH)
+                .setSize(3)
+                .execute()
+                .actionGet();
+
+        int i = 0;
+        do {
+            i++;
+            String scrollId = searchResponse.getScrollId();
+
+            System.out.println("----------第"+i+"次查询-------------");
+            System.out.println("searchByScroll scrollID: "+scrollId);
+            // 这一批查询结果
+            for (SearchHit hit : searchResponse.getHits().getHits()){
+                String source = hit.getSourceAsString();
+                System.out.println("searchByScroll source: "+source);
+            }
+
+            // 使用上次的scrollId继续访问,这个 ID 可以传递给 scroll API 来检索下一个批次的结果.
+            searchResponse = client.prepareSearchScroll(scrollId).setScroll(new TimeValue(80000)).execute().actionGet();
+        }while (searchResponse.getHits().getHits().length != 0);
+
+    }
 
     /**
     * Java API之Match All Query

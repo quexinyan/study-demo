@@ -18,6 +18,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Time           2018/6/28 15:38
@@ -58,28 +60,37 @@ public class BatchHandlesTest {
         TransportClient client= ESUtils.getClient();
         BulkRequestBuilder bulkRequest = client.prepareBulk();
 
-        bulkRequest.add(client.prepareIndex("aggregations", "aggregation", "3")
+        bulkRequest.add(client.prepareIndex("aggregations1", "aggregation1", "16")
                 .setSource(jsonBuilder()
                         .startObject()
                         .field("user", "kimchy")
-                        .field("postDate", new Date())
+                        .field("postDate", "2018-02-03")
                         .field("age", 19)
                         .field("salary", 4500.00)
                         .field("message", "我的宝马多少马力")
                         .endObject()
                 )
         );
-        bulkRequest.add(client.prepareIndex("aggregations", "aggregation")
+        bulkRequest.add(client.prepareIndex("aggregations1", "aggregation1")
                 .setSource(jsonBuilder()
                         .startObject()
                         .field("user", "kimchy")
-                        .field("postDate", new Date())
+                        .field("postDate", "2018-02-03")
                         .field("age", 26)
                         .field("salary", 11000.60)
                         .field("message", "我的保时捷马力不错")
                         .endObject()
                 )
         );
+
+        Map<String , Object> esMap = new HashMap<String, Object>();
+        esMap.put("user", "gaox");
+        esMap.put("postDate", "2018-07-15");
+        esMap.put("age", "24");
+        esMap.put("salary", "9000");
+        esMap.put("message", "什么时候能买房？");
+        bulkRequest.add(client.prepareIndex("aggregations1", "aggregation1")
+                .setSource(esMap));
         //批量执行
         BulkResponse bulkResponse = bulkRequest.get();
         System.out.println(bulkResponse.status());
