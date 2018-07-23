@@ -18,6 +18,37 @@ import java.util.List;
 @Api(tags = "二：用户信息")
 public class UserController {
 
+
+	@ApiOperation(value = "swagger测试", httpMethod = "GET")
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@ResponseBody
+	public String test(){
+
+		return "hello swagger";
+	}
+
+	@ApiOperation(value = "查询用户列表-分页", httpMethod = "POST", notes = "分页暂时写死")
+	@RequestMapping(value = "/queryUsers", method = RequestMethod.POST)
+	@ResponseBody
+	public Result queryUsers(@ApiParam(required = true, name = "start", value = "起始条数") Integer start,
+								 @ApiParam(name = "end", value = "终止条数") Integer end){
+
+		List<UserVo> data = new ArrayList<>();
+		UserVo uv = new UserVo();
+		uv.setId(1);
+		uv.setLoginId("hhh");
+		uv.setUserName("asd");
+		uv.setUserPass("123456");
+		data.add(uv);
+
+		String msg = data.size() > 0 ? "" : "没有查询到相关记录";
+		Result result = new Result();
+		result.setMsg(msg);
+		result.setCode(1);
+		result.setData(data);
+		return result;
+	}
+
 	@RequestMapping(value = "/listCompound", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiResponses(value = {
@@ -28,7 +59,7 @@ public class UserController {
 			@ApiParam(required = true, name = "start", value = "start") int start,
 			int limit,
 			@ApiParam(required = false, name = "userName", value = "名称模糊查询") String userName) {
-		List<UserVo> data = new ArrayList<UserVo>();
+		List<UserVo> data = new ArrayList<>();
 		String msg = data.size() > 0 ? "" : "没有查询到相关记录";
 		Result result = new Result();
 		result.setMsg(msg);

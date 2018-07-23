@@ -26,7 +26,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @Time           2018/7/18 11:21
  * @Author          gaox
  * @Description     @Configuration 配置注解，自动在本类上下文加载一些环境变量信息
- @EnableWebMvc
+ @EnableWebMvc  启用Mvc,非springboot框架需要引入注解@EnableWebMvc
  @EnableSwagger2 使swagger2生效
  @ComponentScan("com.scan.controll") 需要扫描的包路径
  */
@@ -36,18 +36,20 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     public Docket customDocket() {
         //
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo());
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("demo.swagger"))
+                .paths(PathSelectors.any())
+                .build();
     }
 
     private ApiInfo apiInfo() {
         Contact contact = new Contact("老王", "https://www.baidu.me", "baidu_666@icloud.com");
-        return new ApiInfo("Blog前台API接口",//大标题 title
-                "Swagger测试demo",//小标题
-                "0.0.1",//版本
-                "www.baidu.com",//termsOfServiceUrl
-                contact,//作者
-                "Blog",//链接显示文字
-                "https://www.baidu.me"//网站链接
-        );
+        return new ApiInfoBuilder()
+                .title("swagger测试")
+                .description("demo接口")
+                .contact(contact)
+                .version("1.1.0")
+                .build();
     }
 }

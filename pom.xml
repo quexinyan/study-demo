@@ -236,6 +236,16 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.6.3</version>
         </dependency>
+        <!--<dependency>
+            <groupId>com.github.caspar-chen</groupId>
+            <artifactId>swagger-ui-layer</artifactId>
+            <version>0.0.3</version>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.ohcomeyes</groupId>
+            <artifactId>swagger-ui-layer</artifactId>
+            <version>1.2</version>
+        </dependency>
 
     </dependencies>
 	<build>
