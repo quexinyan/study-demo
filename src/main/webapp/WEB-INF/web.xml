@@ -8,7 +8,7 @@
 	<!-- 加载spring容器 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring/spring-*.xml</param-value>
+		<param-value>classpath:spring/spring-application.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -40,7 +40,8 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DispatcherServlet</servlet-name>
-		<url-pattern>*.do</url-pattern>
+		<!--拦截路径改为/，不要配置成后缀的，例如：/*.do等，这会导致，wagger-ui.html页面被拦截，无法加载。-->
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
 </web-app>

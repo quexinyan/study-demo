@@ -12,10 +12,10 @@
 	<context:annotation-config />
 
 	<!-- 自动扫描bean，把作了注解的类转换为bean -->
-	<context:component-scan base-package="demo.request" />
+	<context:component-scan base-package="demo.request, demo.swagger" />
 	
 	<!-- 静态资源 -->
-	<mvc:resources location="/resource/" mapping="/resource/**"></mvc:resources>
+	<!--<mvc:resources location="/resource/" mapping="/resource/**"></mvc:resources>-->
 
 	<!-- 启动Springmvc注解驱动 -->
 	<mvc:annotation-driven>
@@ -41,4 +41,9 @@
 		<!-- 配置jsp路径的后缀 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
+
+	<!-- swagger配置 -->
+	<mvc:resources mapping="/swagger/**" location="/swagger/" cache-period="31556926"/>
+	<mvc:default-servlet-handler />
+	<bean class="demo.swagger.SwaggerConfig" />
 </beans>

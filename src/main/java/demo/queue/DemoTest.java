@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @Time           2018/7/6 16:17
@@ -66,12 +69,101 @@ public class DemoTest {
     }
 
     /**
-    * 阻塞队列
+    * 阻塞队列-生产者消费者问题
     * @author      gaox
     * @date        2018/7/6 16:33
     */
     @Test
-    public void blockQueue(){
+    public void blockingQueue(){
 
+        BlockingQueue<Integer> queue = new LinkedBlockingDeque<Integer>(10);
+        Producer producer = new Producer(queue);
+        Consumer consumer = new Consumer(queue);
+
+        // 创建5个生产者，5个消费者
+        for(int i=0; i<10; i++){
+            if(i < 5){
+                new Thread(producer, "producer"+i).start();
+            }else{
+                new Thread(consumer, "consumer"+(i-5)).start();
+            }
+        }
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        producer.shutDown();
+        consumer.shutDown();
+    }
+
+    /**
+     * @Time           2018/7/9 15:39
+     * @Author          gaox
+     * @Description     生产者
+    */
+    public class Producer implements Runnable{
+
+        private BlockingQueue<Integer> queue;
+        private volatile boolean flag;
+        private Random random;
+
+        public Producer(BlockingQueue<Integer> queue) {
+            this.queue = queue;
+            flag = false;
+            random = new Random();
+        }
+
+        public void shutDown(){
+            flag = true;
+        }
+
+        @Override
+        public void run() {
+            while (!flag){
+                int info = random.nextInt(100);
+                try {
+                    queue.put(info);
+                    System.out.println(Thread.currentThread().getName()+" produce "+info);
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * @Time           2018/7/9 15:46
+     * @Author          gaox
+     * @Description     消费者
+    */
+    public class Consumer implements Runnable{
+
+        private BlockingQueue<Integer> queue;
+        private volatile boolean flag;
+
+        public Consumer(BlockingQueue<Integer> queue) {
+            this.queue = queue;
+        }
+
+        public void shutDown(){
+            flag = true;
+        }
+
+        @Override
+        public void run() {
+            while (!flag){
+                int info;
+                try {
+                    info = queue.take();
+                    System.out.println(Thread.currentThread().getName()+" consumer "+info);
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
