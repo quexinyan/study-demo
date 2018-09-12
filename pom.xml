@@ -256,7 +256,6 @@
         </dependency>
 
 	</dependencies>
-    </dependencies>
 	<build>
 		<finalName>study-all</finalName>
 		
