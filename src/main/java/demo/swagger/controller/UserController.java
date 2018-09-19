@@ -33,7 +33,7 @@ public class UserController {
 	public Result queryUsers(@ApiParam(required = true, name = "start", value = "起始条数") Integer start,
 								 @ApiParam(name = "end", value = "终止条数") Integer end){
 
-		List<UserVo> data = new ArrayList<>();
+		List<UserVo> data = new ArrayList<UserVo>();
 		UserVo uv = new UserVo();
 		uv.setId(1);
 		uv.setLoginId("hhh");
@@ -59,7 +59,7 @@ public class UserController {
 			@ApiParam(required = true, name = "start", value = "start") int start,
 			int limit,
 			@ApiParam(required = false, name = "userName", value = "名称模糊查询") String userName) {
-		List<UserVo> data = new ArrayList<>();
+		List<UserVo> data = new ArrayList<UserVo>();
 		String msg = data.size() > 0 ? "" : "没有查询到相关记录";
 		Result result = new Result();
 		result.setMsg(msg);
