@@ -68,5 +68,7 @@ public class getMonthDiff {
         System.out.println(getMonthDiff(d1, d2));*/
 
         System.out.println(countMonths("", "", ""));
+        /*SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        sdf.parse(sdf.format(null));*/
     }
 }
