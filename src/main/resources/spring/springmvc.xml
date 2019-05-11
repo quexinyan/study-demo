@@ -14,7 +14,7 @@
 	<context:annotation-config />
 
 	<!-- 自动扫描bean，把作了注解的类转换为bean -->
-	<context:component-scan base-package="demo.request, demo.swagger" />
+	<context:component-scan base-package="demo.request, demo.swagger, demo.validation" />
 	
 	<!-- 静态资源 -->
 	<!--<mvc:resources location="/resource/" mapping="/resource/**"></mvc:resources>-->
